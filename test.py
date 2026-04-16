@@ -28,18 +28,6 @@ def test_movimento_para_cima():
     game.move()
     assert game.snake[0] == (5, 4)
 
-#Teste 4 -> Frutas
-def test_comer_fruta_aumenta_tamanho():
-    game = SnakeGame(10, 10)
-    game.fruits = [(6, 5)]
-    game.move() # Move para (6,5) onde está a fruta
-    assert len(game.snake) == 2
-
-def test_quantidade_de_frutas_baseado_no_tamanho():
-    game = SnakeGame(10, 10)
-    # Simula tamanho 10
-    game.snake = [(i, 0) for i in range(10)]
-    assert game.required_fruits() == 2
 
 def test_movimento_para_baixo():
     game = SnakeGame(width=10, height=10)
@@ -75,3 +63,29 @@ def test_atravessar_parede_baixo_sul():
     game.direction = 's'
     game.move()
     assert game.snake[0] == (5, 0)
+
+#Teste 4 -> Frutas
+def test_comer_fruta_aumenta_tamanho():
+    game = SnakeGame(10, 10)
+    game.fruits = [(6, 5)]
+    game.move() # Move para (6,5) onde está a fruta
+    assert len(game.snake) == 2
+
+def test_quantidade_de_frutas_baseado_no_tamanho():
+    game = SnakeGame(10, 10)
+    # Simula tamanho 10
+    game.snake = [(i, 0) for i in range(10)]
+    assert game.required_fruits() == 2
+
+# Teste 5 -> Bloqueiar movimentação 180°
+def test_impedir_virada_180_graus_horizontal():
+    game = SnakeGame(10, 10)
+    game.direction = 'd' # Indo para Direita
+    game.update_direction('a') # Tenta ir para Esquerda (Oposta)
+    assert game.direction == 'd' # Deve continuar indo para Direita
+
+def test_impedir_virada_180_graus_vertical():
+    game = SnakeGame(10, 10)
+    game.direction = 'w' # Indo para Cima
+    game.update_direction('s') # Tenta ir para Baixo (Oposta)
+    assert game.direction == 'w' # Deve continuar indo para Cima
