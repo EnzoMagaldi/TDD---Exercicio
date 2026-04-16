@@ -28,6 +28,19 @@ def test_movimento_para_cima():
     game.move()
     assert game.snake[0] == (5, 4)
 
+#Teste 4 -> Frutas
+def test_comer_fruta_aumenta_tamanho():
+    game = SnakeGame(10, 10)
+    game.fruits = [(6, 5)]
+    game.move() # Move para (6,5) onde está a fruta
+    assert len(game.snake) == 2
+
+def test_quantidade_de_frutas_baseado_no_tamanho():
+    game = SnakeGame(10, 10)
+    # Simula tamanho 10
+    game.snake = [(i, 0) for i in range(10)]
+    assert game.required_fruits() == 2
+
 def test_movimento_para_baixo():
     game = SnakeGame(width=10, height=10)
     game.update_direction('s')
