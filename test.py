@@ -17,7 +17,7 @@ def test_movimento_para_direita():
 
 def test_movimento_para_esquerda():
     game = SnakeGame(width=10, height=10)
-    game.direction = 'w'
+    #game.direction = 'w'
     game.update_direction('a')
     game.move()
     assert game.snake[0] == (4, 5)
@@ -33,3 +33,32 @@ def test_movimento_para_baixo():
     game.update_direction('s')
     game.move()
     assert game.snake[0] == (5, 6)
+
+#Teste 3 -> Atravessar paredes
+def test_atravessar_parede_direita_leste():
+    game = SnakeGame(width=10, height=10)
+    game.snake = [(9, 5)] 
+    game.direction = 'd'
+    game.move()
+    assert game.snake[0] == (0, 5)
+
+def test_atravessar_parede_esquerda_oeste():
+    game = SnakeGame(width=10, height=10)
+    game.snake = [(0, 5)]
+    game.direction = 'a'
+    game.move()
+    assert game.snake[0] == (9, 5)
+
+def test_atravessar_parede_cima_norte():
+    game = SnakeGame(width=10, height=10)
+    game.snake = [(5, 0)]
+    game.direction = 'w'
+    game.move()
+    assert game.snake[0] == (5, 9)
+
+def test_atravessar_parede_baixo_sul():
+    game = SnakeGame(width=10, height=10)
+    game.snake = [(5, 9)]
+    game.direction = 's'
+    game.move()
+    assert game.snake[0] == (5, 0)
