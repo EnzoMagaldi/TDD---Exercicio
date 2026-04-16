@@ -11,7 +11,9 @@ class SnakeGame:
         self.spawn_fruits()
 
     def update_direction(self, new_dir):
-        self.direction = new_dir
+        opposites = {'w': 's', 's': 'w', 'a': 'd', 'd': 'a'}
+        if new_dir in opposites and opposites[new_dir] != self.direction:
+            self.direction = new_dir
 
     def required_fruits(self):
         return (len(self.snake) // 10) + 1
