@@ -10,6 +10,6 @@ class SnakeGame:
         move_map = {'w': (0, -1), 's': (0, 1), 'a': (-1, 0), 'd': (1, 0)}
         hx, hy = self.snake[0]
         dx, dy = move_map[self.direction]
-        new_head = (hx + dx, hy + dy)
+        new_head = ((hx + dx) % self.width, (hy + dy) % self.height)
         self.snake.insert(0, new_head)
         self.snake.pop()
