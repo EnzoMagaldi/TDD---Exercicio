@@ -80,12 +80,12 @@ def test_quantidade_de_frutas_baseado_no_tamanho():
 # Teste 5 -> Bloqueiar movimentação 180°
 def test_impedir_virada_180_graus_horizontal():
     game = SnakeGame(10, 10)
-    game.direction = 'd' # Indo para Direita
-    game.update_direction('a') # Tenta ir para Esquerda (Oposta)
-    assert game.direction == 'd' # Deve continuar indo para Direita
+    game.direction = 'd' 
+    game.update_direction('a') 
+    assert game.direction == 'd' 
 
 def test_impedir_virada_180_graus_vertical():
     game = SnakeGame(10, 10)
-    game.direction = 'w' # Indo para Cima
-    game.update_direction('s') # Tenta ir para Baixo (Oposta)
-    assert game.direction == 'w' # Deve continuar indo para Cima
+    game.direction = 'w'
+    game.update_direction('s') 
+    assert game.direction == 'w'
