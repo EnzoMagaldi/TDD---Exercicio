@@ -21,11 +21,14 @@ class SnakeGame:
         return move_map.get(self.direction, (0, 0))
     
     def spawn_fruits(self):
-        while len(self.fruits) < self.required_fruits():
-            new_fruit = (random.randint(0, self.width-1), random.randint(0, self.height-1))
+       while len(self.fruits) < self.required_fruits():
+            new_fruit = (
+                random.randint(0, self.width - 1), 
+                random.randint(0, self.height - 1)
+            )
+            # Verifica se a posição é válida antes de adicionar
             if new_fruit not in self.snake and new_fruit not in self.fruits:
                 self.fruits.append(new_fruit)
-
     def move(self):
         if self.game_over:
             return
