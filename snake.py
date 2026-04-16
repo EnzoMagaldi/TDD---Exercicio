@@ -1,15 +1,29 @@
 class SnakeGame:
     def __init__(self, width, height):
+        self.width = width
+        self.height = height
         self.snake = [(width // 2, height // 2)]
         self.direction = 'd'
+        self.game_over = False
     def update_direction(self, new_dir):
         self.direction = new_dir
-   def move(self):
-        if self.game_over: 
-            return
+
+    def _get_movement_vector(self):
         move_map = {'w': (0, -1), 's': (0, 1), 'a': (-1, 0), 'd': (1, 0)}
+        return move_map.get(self.direction, (0, 0))
+    
+    def move(self):
+        if self.game_over:
+            return
+            
+        dx, dy = self._get_movement_vector()
         hx, hy = self.snake[0]
-        dx, dy = move_map[self.direction]
+
         new_head = ((hx + dx) % self.width, (hy + dy) % self.height)
+
+        if new_head in self.snake:
+            self.game_over = True
+            return
+
         self.snake.insert(0, new_head)
         self.snake.pop()
