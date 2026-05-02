@@ -89,6 +89,13 @@ class SnakeGame:
         else:
             self.snake.pop()
 
+    def reset(self):
+        self.snake = [(self.width // 2, self.height // 2)]
+        self.direction = 'd'
+        self.game_over = False
+        self.fruits = []
+        self.spawn_fruits()
+
 
 
 class Renderer:
@@ -122,17 +129,17 @@ class Renderer:
         }
 
     def draw(self, game):
-        self.screen.fill((0, 0, 0))
+        self.draw_background()
         snake = game.snake
 
         dir_map = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
 
-        # ===== cabeça =====
+        #cabeça
         head_dir = dir_map[game.direction]
         sprite = self.sprites[f"head_{head_dir}"]
         self._blit(sprite, snake[0])
 
-        # ===== corpo =====
+        #corpo
         for i in range(1, len(snake)-1):
             prev = snake[i-1]
             curr = snake[i]
@@ -151,13 +158,13 @@ class Renderer:
 
             self._blit(sprite, curr)
 
-        # ===== cauda =====
+        #cauda
         if len(snake) > 1:
             tail_dir = direction(snake[-2], snake[-1], game.width, game.height)
             sprite = self.sprites[f"tail_{tail_dir}"]
             self._blit(sprite, snake[-1])
 
-        # ===== frutas =====
+        #frutas 
         for f in game.fruits:
             self._blit(self.sprites["apple"], f)
 
@@ -221,3 +228,28 @@ class Renderer:
         self.screen.blit(text2, rect2)
 
         pygame.display.flip()
+
+    def draw_background(self):
+        color1 = (170, 215, 81)   # verde claro
+        color2 = (162, 209, 73)   # verde escuro
+
+        for y in range(self.screen.get_height() // self.cell):
+            for x in range(self.screen.get_width() // self.cell):
+
+                if (x + y) % 2 == 0:
+                    color = color1
+                else:
+                    color = color2
+
+                rect = pygame.Rect(
+                    x * self.cell,
+                    y * self.cell,
+                    self.cell,
+                    self.cell
+                )
+
+                pygame.draw.rect(self.screen, color, rect)
+
+    def _blit(self, sprite, pos):
+        x, y = pos
+        self.screen.blit(sprite, (x*self.cell, y*self.cell))
