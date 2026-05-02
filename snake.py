@@ -44,6 +44,7 @@ class SnakeGame:
         self.game_over = False
         self.fruits = []
         self.spawn_fruits()
+        self.paused = False
 
     def update_direction(self, new_dir):
         opposites = {'w': 's', 's': 'w', 'a': 'd', 'd': 'a'}
@@ -67,7 +68,7 @@ class SnakeGame:
             if new_fruit not in self.snake and new_fruit not in self.fruits:
                 self.fruits.append(new_fruit)
     def move(self):
-        if self.game_over:
+        if self.game_over or self.paused:
             return
 
 
