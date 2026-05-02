@@ -1,6 +1,7 @@
 import pytest
 from snake import SnakeGame, direction, is_straight
-
+from unittest.mock import patch
+from snake import Renderer
 
 #Teste 1 -> Posição inicial
 def test_cobra_deve_ter_posicao_inicial():
@@ -124,3 +125,37 @@ def test_pause_does_not_move():
     game.move()
 
     assert game.snake == original
+
+def test_carrega_todas_as_imagens():
+    with patch("pygame.image.load") as mock_load:
+        with patch("pygame.display.set_mode"):
+            with patch("pygame.init"):
+                
+                Renderer(32, 10, 10)
+
+                expected_calls = [
+                    "Graphics/head_up.png",
+                    "Graphics/head_down.png",
+                    "Graphics/head_left.png",
+                    "Graphics/head_right.png",
+
+                    "Graphics/tail_up.png",
+                    "Graphics/tail_down.png",
+                    "Graphics/tail_left.png",
+                    "Graphics/tail_right.png",
+
+                    "Graphics/body_horizontal.png",
+                    "Graphics/body_vertical.png",
+
+                    "Graphics/body_bottomright.png",
+                    "Graphics/body_bottomleft.png",
+                    "Graphics/body_topleft.png",
+                    "Graphics/body_topright.png",
+
+                    "Graphics/apple.png"
+                ]
+
+                loaded_paths = [call.args[0] for call in mock_load.call_args_list]
+
+                for path in expected_calls:
+                    assert path in loaded_paths
