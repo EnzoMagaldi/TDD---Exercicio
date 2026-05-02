@@ -19,10 +19,14 @@ def direction(a, b, width, height):
     elif dy < -1:
         dy = 1
 
-    if dx == 1: return 'right'
-    if dx == -1: return 'left'
-    if dy == 1: return 'down'
-    if dy == -1: return 'up'
+    if dx == 1: 
+        return 'right'
+    if dx == -1: 
+        return 'left'
+    if dy == 1: 
+        return 'down'
+    if dy == -1: 
+        return 'up'
 
 class SnakeGame:
     def __init__(self, width, height):
