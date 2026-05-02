@@ -17,7 +17,7 @@ def test_movimento_para_direita():
 
 def test_movimento_para_esquerda():
     game = SnakeGame(width=10, height=10)
-    #game.direction = 'w'
+    game.direction = 'w'
     game.update_direction('a')
     game.move()
     assert game.snake[0] == (4, 5)
@@ -89,3 +89,18 @@ def test_impedir_virada_180_graus_vertical():
     game.direction = 'w'
     game.update_direction('s') 
     assert game.direction == 'w'
+
+# Teste 6 -> colisões com as paredes usando nova lógica de movimento
+def test_direction_wrap_around_horizontal():
+    a = (9, 5)
+    b = (0, 5)
+    d = direction(a, b, 10, 10)
+
+    assert d == 'right'
+
+def test_direction_wrap_around_horizontal():
+    a = (5, 9)
+    b = (5, 0)
+    d = direction(a, b, 10, 10)
+
+    assert d == 'down'
