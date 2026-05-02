@@ -1,5 +1,29 @@
 import random
 
+def direction(a, b, width, height):
+    ax, ay = a
+    bx, by = b
+
+    dx = bx - ax
+    dy = by - ay
+
+    #corrigir wrap horizontal
+    if dx > 1:
+        dx = -1
+    elif dx < -1:
+       dx = 1
+
+    # corrigir wrap vertical
+    if dy > 1:
+        dy = -1
+    elif dy < -1:
+        dy = 1
+
+    if dx == 1: return 'right'
+    if dx == -1: return 'left'
+    if dy == 1: return 'down'
+    if dy == -1: return 'up'
+
 class SnakeGame:
     def __init__(self, width, height):
         self.width = width

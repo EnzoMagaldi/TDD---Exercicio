@@ -1,5 +1,5 @@
 import pytest
-from snake import SnakeGame
+from snake import SnakeGame, direction
 
 
 #Teste 1 -> Posição inicial
