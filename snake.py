@@ -98,7 +98,29 @@ class Renderer:
         self.screen = pygame.display.set_mode(
             (width * cell_size, height * cell_size)
         )
-        
+
+        self.sprites = {
+            "head_up": pygame.image.load("Graphics/head_up.png"),
+            "head_down": pygame.image.load("Graphics/head_down.png"),
+            "head_left": pygame.image.load("Graphics/head_left.png"),
+            "head_right": pygame.image.load("Graphics/head_right.png"),
+
+            "tail_up": pygame.image.load("Graphics/tail_up.png"),
+            "tail_down": pygame.image.load("Graphics/tail_down.png"),
+            "tail_left": pygame.image.load("Graphics/tail_left.png"),
+            "tail_right": pygame.image.load("Graphics/tail_right.png"),
+
+            "body_h": pygame.image.load("Graphics/body_horizontal.png"),
+            "body_v": pygame.image.load("Graphics/body_vertical.png"),
+
+            "curve_ur": pygame.image.load("Graphics/body_bottomright.png"),
+            "curve_rd": pygame.image.load("Graphics/body_bottomleft.png"),
+            "curve_dl": pygame.image.load("Graphics/body_topleft.png"),
+            "curve_lu": pygame.image.load("Graphics/body_topright.png"),
+
+            "apple": pygame.image.load("Graphics/apple.png")
+        }
+
     def draw_pause(self):
         # overlay escuro
             overlay = pygame.Surface(self.screen.get_size())
