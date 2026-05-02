@@ -1,6 +1,6 @@
 import pytest
 from snake import SnakeGame, direction, is_straight
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from snake import Renderer
 
 #Teste 1 -> Posição inicial
@@ -126,6 +126,7 @@ def test_pause_does_not_move():
 
     assert game.snake == original
 
+# Teste 9 -> Carregar Imagens
 def test_carrega_todas_as_imagens():
     with patch("pygame.image.load") as mock_load:
         with patch("pygame.display.set_mode"):
@@ -159,3 +160,121 @@ def test_carrega_todas_as_imagens():
 
                 for path in expected_calls:
                     assert path in loaded_paths
+
+# Teste 10 -> Lógica para carregamento das imagens 
+def test_draw_head_sprite():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+        game.snake = [(5,5), (4,5)]
+        game.direction = 'd'  # direita
+
+        renderer.draw(game)
+
+        renderer._blit.assert_any_call(renderer.sprites["head_right"], (5,5))
+
+def test_draw_body_horizontal():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+        game.snake = [(5,5), (4,5), (3,5)]  # linha horizontal
+
+        renderer.draw(game)
+
+        renderer._blit.assert_any_call(renderer.sprites["body_h"], (4,5))
+
+def test_draw_body_vertical():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+        game.snake = [(5,5), (5,4), (5,3)]  # vertical
+
+        renderer.draw(game)
+
+        renderer._blit.assert_any_call(renderer.sprites["body_v"], (5,4))
+
+def test_draw_curve():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+
+        # formato em L
+        game.snake = [(5,5), (5,4), (6,4)]
+
+        renderer.draw(game)
+
+        calls = [c.args[0] for c in renderer._blit.call_args_list]
+
+        assert any(sprite in calls for sprite in [
+            renderer.sprites["curve_ur"],
+            renderer.sprites["curve_rd"],
+            renderer.sprites["curve_dl"],
+            renderer.sprites["curve_lu"],
+        ])
+
+def test_draw_tail():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+        game.snake = [(5,5), (4,5)]
+
+        renderer.draw(game)
+
+        renderer._blit.assert_any_call(renderer.sprites["tail_left"], (4,5))
+
+def test_draw_fruit():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.display.flip"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+        renderer._blit = MagicMock()
+
+        game = SnakeGame(10, 10)
+        game.fruits = [(2,2)]
+
+        renderer.draw(game)
+
+        renderer._blit.assert_any_call(renderer.sprites["apple"], (2,2))
+
+def test_get_curve_sprite():
+    with patch("pygame.image.load", return_value="img"), \
+         patch("pygame.display.set_mode"), \
+         patch("pygame.init"):
+
+        renderer = Renderer(32, 10, 10)
+
+        sprite = renderer._get_curve_sprite('up', 'right')
+
+        assert sprite == renderer.sprites["curve_ur"]
