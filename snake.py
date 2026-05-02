@@ -1,4 +1,5 @@
 import random
+import pygame
 
 def direction(a, b, width, height):
     ax, ay = a
@@ -88,3 +89,33 @@ class SnakeGame:
         else:
             self.snake.pop()
 
+
+
+class Renderer:
+    def __init__(self, cell_size, width, height):
+        pygame.init()
+        self.cell = cell_size
+        self.screen = pygame.display.set_mode(
+            (width * cell_size, height * cell_size)
+        )
+        
+    def draw_pause(self):
+        # overlay escuro
+            overlay = pygame.Surface(self.screen.get_size())
+            overlay.set_alpha(150)
+            overlay.fill((0, 0, 0))
+            self.screen.blit(overlay, (0, 0))
+
+            font_big = pygame.font.Font(None, 72)
+            font_small = pygame.font.Font(None, 36)
+
+            text1 = font_big.render("PAUSADO", True, (255, 255, 0))
+            text2 = font_small.render("Pressione P para continuar", True, (255, 255, 255))
+
+            rect1 = text1.get_rect(center=(self.screen.get_width()//2, self.screen.get_height()//2 - 30))
+            rect2 = text2.get_rect(center=(self.screen.get_width()//2, self.screen.get_height()//2 + 30))
+
+            self.screen.blit(text1, rect1)
+            self.screen.blit(text2, rect2)
+
+            pygame.display.flip()
