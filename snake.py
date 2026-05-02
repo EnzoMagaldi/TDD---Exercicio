@@ -27,6 +27,13 @@ def direction(a, b, width, height):
         return 'down'
     if dy == -1: 
         return 'up'
+    
+def is_straight(d1, d2):
+    return (
+        d1 == d2 or
+        {d1, d2} == {'up', 'down'} or
+        {d1, d2} == {'left', 'right'}
+    )
 
 class SnakeGame:
     def __init__(self, width, height):

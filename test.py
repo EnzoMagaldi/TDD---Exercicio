@@ -1,5 +1,5 @@
 import pytest
-from snake import SnakeGame, direction
+from snake import SnakeGame, direction, is_straight
 
 
 #Teste 1 -> Posição inicial
