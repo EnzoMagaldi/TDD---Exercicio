@@ -114,3 +114,13 @@ def test_straight_vertical():
 
 def test_not_straight():
     assert is_straight('up', 'right') is False
+
+# Teste 8 -> Jogo pausado
+def test_pause_does_not_move():
+    game = SnakeGame(10, 10)
+    game.paused = True
+
+    original = game.snake.copy()
+    game.move()
+
+    assert game.snake == original
