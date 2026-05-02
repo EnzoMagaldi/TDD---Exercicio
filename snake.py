@@ -197,3 +197,27 @@ class Renderer:
             self.screen.blit(text2, rect2)
 
             pygame.display.flip()
+
+    def draw_game_over(self):
+        # escurecer tela
+        overlay = pygame.Surface(self.screen.get_size())
+        overlay.set_alpha(180)
+        overlay.fill((0, 0, 0))
+        self.screen.blit(overlay, (0, 0))
+
+        # fontes
+        font_big = pygame.font.Font(None, 72)
+        font_small = pygame.font.Font(None, 36)
+
+        # textos
+        text1 = font_big.render("GAME OVER", True, (255, 50, 50))
+        text2 = font_small.render("Pressione R para reiniciar", True, (255, 255, 255))
+
+        # centralizar
+        rect1 = text1.get_rect(center=(self.screen.get_width()//2, self.screen.get_height()//2 - 30))
+        rect2 = text2.get_rect(center=(self.screen.get_width()//2, self.screen.get_height()//2 + 30))
+
+        self.screen.blit(text1, rect1)
+        self.screen.blit(text2, rect2)
+
+        pygame.display.flip()
