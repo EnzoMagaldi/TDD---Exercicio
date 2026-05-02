@@ -104,3 +104,13 @@ def test_direction_wrap_around_horizontal():
     d = direction(a, b, 10, 10)
 
     assert d == 'down'
+
+# Teste 7 -> Cobra no estado normal
+def test_straight_horizontal():
+    assert is_straight('left', 'right') is True
+
+def test_straight_vertical():
+    assert is_straight('up', 'down') is True
+
+def test_not_straight():
+    assert is_straight('up', 'right') is False
